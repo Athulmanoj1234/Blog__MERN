@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import '../App.css'
-import Post from "../Post.js"
+import Post from "../Post.js";
 import axios from 'axios'
+import { use } from 'react';
+import { UserContext } from '../userContext.js';
 
 
 
 export default function IndexPage(){
     const [post, setPost] = useState([]); //post is the state variable, which is initialized to an empty string.setPost is the function used to update the post state.
-  
+    const {userInfo} = useContext(UserContext)
 
     useEffect(() =>{
       axios.get('http://localhost:4003/post').then(response =>{
@@ -23,7 +25,7 @@ export default function IndexPage(){
         <>
         {post.length > 0 && post.map(eachpost => (
        
-          <Post {...eachpost} />
+          <Post {...eachpost} username={userInfo?.username} />
         
       ))}
     </>

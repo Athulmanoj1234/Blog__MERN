@@ -5,8 +5,14 @@ const postShcema = new mongoose.Schema({
         summary: String,
         content: String,
         cover: String,
-        author: {type: Schema.Types.ObjectId, ref: 'users'} //This means the author field will store an ObjectId, which is a unique identifier for another document (in this case, a User document).
-      //objestId is grabbed from document user  
+        author: {type: Schema.Types.ObjectId, ref: 'users'}, //This means the author field will store an ObjectId, which is a unique identifier for another document (in this case, a User document).
+        //objestId is grabbed from document user  
+        comments: [{
+                comments: String,
+                username: String,
+        }],
+        likes: [Number],
+        
     },
 {
         timestamps: true

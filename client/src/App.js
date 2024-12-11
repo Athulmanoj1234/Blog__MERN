@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css'
-import Post from './Post.js';
+
 import Header from './Header.js';
 import { BrowserRouter as Router,Route, Routes } from 'react-router-dom';
 import Layout from './Layout.js';

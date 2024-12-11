@@ -26,6 +26,7 @@ const __fileName = fileURLToPath(import.meta.url); // In ES modules, import.meta
 const __dirname = path.dirname(__fileName);  //path.dirname() extracts the directory name from the full file path (__filename). It gives you the equivalent of __dirname in ES modules, which is the directory containing the current file.
 
 
+
 app.use(cors(corsOPtions));// used to connect two ports that is frontend port localhost:3000 and backened or api port localhost:4002
 app.use(express.json());//middleware
 app.use(cookieParser());//used to parse cookies 
@@ -88,22 +89,23 @@ app.post('/post', multerMiddleWare.single('files'), async (req, res) =>{
     
     //we are again grabing the token 
     const {token} = req.cookies;   //The /profile route retrieves the cookies (including the JWT token) from itself this index bakened file and sends them back to the client via res.json(req.cookies).
-    
+    console.log(token);
+
     jwt.verify(token, secret,{}, async (err, info) =>{
         if(err){
             throw err;
-        }else{
+        }else{ 
             console.log(info)
         }
     const {title, summary, content} = req.body;
     const postDoc = await models.insertMany({
         title,
         summary,
-        content,
-        cover: newpath,
+        content,  
+        cover: newpath, 
         author: info.id,
     })
-    res.json(postDoc);
+    res.json(postDoc);  
 });
  
 });  
@@ -133,7 +135,7 @@ app.put('/post',  multerMiddleWare.single('files'),async (req, res) =>{
     }
     
         postDoc.title = title; 
-        postDoc.summary = summary;
+        postDoc.summary = summary;     
         postDoc.content = content;
         postDoc.cover= newPath ? newPath : postDoc.cover
 
@@ -142,9 +144,6 @@ app.put('/post',  multerMiddleWare.single('files'),async (req, res) =>{
      }) 
     })
     
-
-
-
 app.get('/post', async (req, res)=>{
     
     res.json(await models.find() //if we want username write only username inside brackets with single quotes
@@ -160,6 +159,62 @@ app.get('/post/:id', async (req, res) => {
     res.json(postDoc);
   })
 
+app.post('/comments/:id', async(req, res) => {
+
+    const {id} = req.params;
+    const {username, comments} = req.body;
+     
+    if(id && username && comments){
+        const blogExists = await models.findById(id);
+        
+
+        if(blogExists){
+
+            //adding comments in posts blog posts which is geted by id 
+            const updatedBogs = await models.updateOne(
+                { _id: id },
+                { $push: { comments: [{comments: comments, username: username }] } }
+            )
+            
+            res.json(updatedBogs);
+        }else{
+            console.log({messege: 'no blogs to find'});
+        }
+    }
+
+})
+
+app.get('/comments/:id', async(req, res) => {
+    const {id} = req.params;
+    //retrieving the comments
+    const comments = await models.findById(id).select('comments');  
+    //console.log(comments);
+    if(comments){
+        res.json(comments);
+    }else{
+        res.json({messege: 'comments annot get fetched'});
+    } 
+}) 
+
+app.post('/likes', async(req, res) => {
+
+    const {_id, username, liked} = req.body;
+    console.log(`on blog post id ${_id} usernamed ${username} have liked in count ${liked}`);
+
+    const blogExists = await models.findById(_id);
+    
+    if(blogExists){
+
+        //inserting likes we have used set beacause to inserting we
+        const updatedBlogs = await models.updateOne(  {_id: _id},
+            {$push: {likes: [liked]}},
+            )
+          res.json({'updated blogs with likes are': updatedBlogs});
+      }else{
+        res.json('There is no blog exists in this id');
+      }
+})
+
 app.delete('/delete/:id', async(req, res) => {
 
     const {id} =req.params;
@@ -171,7 +226,7 @@ app.delete('/delete/:id', async(req, res) => {
     
     const deleteDoc = await models.findById(id);
     const authorOk = JSON.stringify(deleteDoc.author) === JSON.stringify(info.id) 
-    res.json(passOk);
+    res.json(authorOk);
    if(!authorOk){
        res.status(400).json("you are not author")
    }else{
@@ -184,4 +239,4 @@ app.delete('/delete/:id', async(req, res) => {
 app.listen(port, (req, res) =>{
     console.log(`you are listening to the port ${port}`);
 })
-  
+   
