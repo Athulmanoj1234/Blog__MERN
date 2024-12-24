@@ -10,9 +10,10 @@ import multer from 'multer'
 import fs from 'file-system'
 import { fileURLToPath } from 'url'  //This is a method from Node.js' url module. It's used to convert file URLs into file paths. ES modules (enabled by "type": "module" in package.json) use URLs for file paths, but in many cases, you need the file system path (especially for filesystem operations). This function helps convert a file: URL to a regular file path.
 import path from 'path'  // This is the path module from Node.js, which provides utilities to work with file and directory paths. It’s useful for joining paths, getting directory names, etc.
-import { error } from 'console'
+import { error } from 'console';
+import dotenv from 'dotenv';
 
-
+ 
 
 const app = express();
 const port = 4003;
@@ -24,18 +25,19 @@ const corsOPtions = {origin: ['http://localhost:3000','http://localhost:3001','h
 const __fileName = fileURLToPath(import.meta.url); // In ES modules, import.meta is a special object that contains metadata about the current module. import.meta.url returns the URL of the current module file in the form of a file: URL (e.g., file:///path/to/your/file.js).
 //This converts the file URL (import.meta.url) into a file path that is usable in the filesystem (e.g., /path/to/your/file.js on Unix or C:\path\to\your\file.js on Windows). It gives you the equivalent of __filename in ES modules, which is the full path of the current module file.
 const __dirname = path.dirname(__fileName);  //path.dirname() extracts the directory name from the full file path (__filename). It gives you the equivalent of __dirname in ES modules, which is the directory containing the current file.
-
-
+dotenv.config();
+ 
 
 app.use(cors(corsOPtions));// used to connect two ports that is frontend port localhost:3000 and backened or api port localhost:4002
 app.use(express.json());//middleware
 app.use(cookieParser());//used to parse cookies 
 app.use('/uploads', express.static(__dirname + '/uploads'));  // This line of code tells Express to serve the static files in the uploads folder when a client makes a request to /uploads. For example, if a file image.png is in the uploads directory, it will be accessible via http://localhost:4003/uploads/image.png.
 
+
 //connecting the database Mern Blog
-mongoose.connect('mongodb://localhost:27017/MernBlog').then(()=>{
-    console.log("data base is connected"); 
-})
+mongoose.connect(process.env.MONGO_URI).then(()=>{
+    console.log("mongo atlas is connected"); 
+}) 
 
 app.post('/register', async (req, res) =>{
     const {username, password} = req.body;
