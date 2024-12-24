@@ -10,7 +10,6 @@ import multer from 'multer'
 import fs from 'file-system'
 import { fileURLToPath } from 'url'  //This is a method from Node.js' url module. It's used to convert file URLs into file paths. ES modules (enabled by "type": "module" in package.json) use URLs for file paths, but in many cases, you need the file system path (especially for filesystem operations). This function helps convert a file: URL to a regular file path.
 import path from 'path'  // This is the path module from Node.js, which provides utilities to work with file and directory paths. It’s useful for joining paths, getting directory names, etc.
-import { error } from 'console';
 import dotenv from 'dotenv';
 
  
