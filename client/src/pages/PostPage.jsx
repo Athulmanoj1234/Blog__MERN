@@ -18,7 +18,7 @@ export default function PostPage() {
     
     useEffect(() => {
         if (id) {
-          axios.get(`https://blog-mern-backend-ayjw.onrender.com/post/${id}`)
+          axios.get(`http://localhost:4003/post/${id}`)
             .then(response => {
               setPostInfo(response.data);
               console.log(response.data);
@@ -33,7 +33,7 @@ export default function PostPage() {
       }, [id, userInfo]);  // Add userInfo to the dependency array to trigger a re-render if userInfo changes
 
       useEffect(() => {
-        axios.get(`https://blog-mern-backend-ayjw.onrender.com/${id}`).then(response => {
+        axios.get(`http://localhost:4003/${id}`).then(response => {
           setReceivedComments(response.data.comments);
           
         })
@@ -50,13 +50,13 @@ export default function PostPage() {
     const username = userInfo.username;
 
    async function handleComments(){
-       const response =  await axios.post(`https://blog-mern-backend-ayjw.onrender.com/comments/${id}`, {username, comments});
+       const response =  await axios.post(`http://localhost:4003/${id}`, {username, comments});
        console.log(response.data);
     }
 
    async function deletePost(e){
         e.preventDefault();
-      await axios.delete(`https://blog-mern-backend-ayjw.onrender.com/delete/${id}`,{withCredentials:true})
+      await axios.delete(`http://localhost:4003/${id}`,{withCredentials:true})
        setRedirect(true);
       }
       if(redirect == true){
