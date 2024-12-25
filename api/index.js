@@ -19,7 +19,7 @@ const port = 4003;
 const salt = bcrypt.genSaltSync(10)//generates salt or strong strings texts with 10 characters which can be used for password storing in database
 const secret = 'bdafejhghrfewgi34h34h3h';
 const multerMiddleWare = multer( {dest: 'uploads/'} )
-const corsOPtions = {origin: 'https://blog-mern-frontend-cz90.onrender.com/login',
+const corsOPtions = {origin: 'https://blog-mern-frontend-cz90.onrender.com',
                   credentials:true,};
 const __fileName = fileURLToPath(import.meta.url); // In ES modules, import.meta is a special object that contains metadata about the current module. import.meta.url returns the URL of the current module file in the form of a file: URL (e.g., file:///path/to/your/file.js).
 //This converts the file URL (import.meta.url) into a file path that is usable in the filesystem (e.g., /path/to/your/file.js on Unix or C:\path\to\your\file.js on Windows). It gives you the equivalent of __filename in ES modules, which is the full path of the current module file.
