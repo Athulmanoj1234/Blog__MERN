@@ -13,7 +13,7 @@ import path from 'path'  // This is the path module from Node.js, which provides
 import dotenv from 'dotenv';
 
  
-
+ 
 const app = express();
 const port = 4003;
 const salt = bcrypt.genSaltSync(10)//generates salt or strong strings texts with 10 characters which can be used for password storing in database
