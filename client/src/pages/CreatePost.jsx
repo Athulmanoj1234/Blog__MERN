@@ -26,7 +26,7 @@ export default function CreatePost(){
          data.set('files', files[0]); //it is because even though when multiple files are selected we need to send only one file ie first file ie we provide index.
         
          e.preventDefault();
-         const response = await axios.post('https://blog-mern-backend-ayjw.onrender.com/post', data, {withCredentials: true}); //we are providing fo a request to send form data to the client.
+         const response = await axios.post('http://localhost:4003/post', data, {withCredentials: true}); //we are providing fo a request to send form data to the client.
                                                                //we should avoid curly braces ie wrapping data beacuse while sending as axios data we should as FormData ie data and should avoid as sending in object wrapped indise curly braces.
          console.log(response.data);
 
