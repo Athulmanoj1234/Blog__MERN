@@ -18,7 +18,7 @@ export default function PostPage() {
     
     useEffect(() => {
         if (id) {
-          axios.get(`http://localhost:4003/post/${id}`)
+          axios.get(`https://blog-mern-backend-ayjw.onrender.com/post/${id}`)
             .then(response => {
               setPostInfo(response.data);
               console.log(response.data);
@@ -33,7 +33,7 @@ export default function PostPage() {
       }, [id, userInfo]);  // Add userInfo to the dependency array to trigger a re-render if userInfo changes
 
       useEffect(() => {
-        axios.get(`http://localhost:4003/comments/${id}`).then(response => {
+        axios.get(`https://blog-mern-backend-ayjw.onrender.com/${id}`).then(response => {
           setReceivedComments(response.data.comments);
           
         })
@@ -50,13 +50,13 @@ export default function PostPage() {
     const username = userInfo.username;
 
    async function handleComments(){
-       const response =  await axios.post(`http://localhost:4003/comments/${id}`, {username, comments});
+       const response =  await axios.post(`https://blog-mern-backend-ayjw.onrender.com/comments/${id}`, {username, comments});
        console.log(response.data);
     }
 
    async function deletePost(e){
         e.preventDefault();
-      await axios.delete(`http://localhost:4003/delete/${id}`,{withCredentials:true})
+      await axios.delete(`https://blog-mern-backend-ayjw.onrender.com/delete/${id}`,{withCredentials:true})
        setRedirect(true);
       }
       if(redirect == true){
@@ -85,7 +85,7 @@ export default function PostPage() {
                    </div>
                  )}
                 <div className="image" style={{marginLeft: '10rem'}}>
-                <img src={`http://localhost:4003/${postInfo.cover}`} alt=""/> {/**we use link of localhost becaluse only image image is displayed in src tag */}
+                <img src={`https://blog-mern-backend-ayjw.onrender.com/${postInfo.cover}`} alt=""/> {/**we use link of localhost becaluse only image image is displayed in src tag */}
             </div>
             
             <div dangerouslySetInnerHTML={{__html: postInfo.content}} style={{marginLeft: '27rem', fontStyle: 'oblique', fontWeight: 'bold'}}></div> {/**this dangerouslySetInnerHTML is used to escape the html tags ie postINfo.content is in present alonged with <p> tag we need to escape it and we are telling the react that by using this react prop the content is safe  */}
