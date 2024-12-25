@@ -19,7 +19,7 @@ export default function Post({title, summary, content, createdAt, author, cover,
     if(username){ 
       setLiked(true);
       const liked = 1;
-      axios.post('http://localhost:4003/likes', {username, liked, _id, likedStatus});
+      axios.post('https://blog-mern-backend-ayjw.onrender.com/likes', {username, liked, _id, likedStatus});
     }else{
       alert('login and continue');
     }
@@ -32,7 +32,7 @@ export default function Post({title, summary, content, createdAt, author, cover,
         <div className="post">
         <div className="image">
           <Link to= {`post/${_id}`}>
-         <img src={'http://localhost:4003/'+cover} alt=""/>
+         <img src={'https://blog-mern-backend-ayjw.onrender.com/'+cover} alt=""/>
          </Link>
         </div>
         <div className="texts">
