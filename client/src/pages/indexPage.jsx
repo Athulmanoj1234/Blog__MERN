@@ -12,7 +12,7 @@ export default function IndexPage(){
     const {userInfo} = useContext(UserContext)
 
     useEffect(() =>{
-      axios.get('http://localhost:4003/post').then(response =>{
+      axios.get('https://blog-mern-backend-ayjw.onrender.com/post').then(response =>{
       const posts = response.data;  
       console.log(posts);
       setPost(posts)
