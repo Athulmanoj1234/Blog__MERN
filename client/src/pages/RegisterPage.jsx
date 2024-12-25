@@ -10,7 +10,7 @@ export default function RegisterPage(){
     async function register(ev) {
         ev.preventDefault();
     
-       const response = await axios.post('http://localhost:4003/register', { username, password });
+       const response = await axios.post('https://blog-mern-backend-ayjw.onrender.com/register', { username, password });
        console.log(response.data);
 
        if(response.status === 200){ 

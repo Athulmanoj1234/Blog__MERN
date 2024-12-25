@@ -9,7 +9,7 @@ import { UserContext } from './userContext';
 export default function Header(){
   const {setUserInfo,userInfo} = useContext(UserContext);
   useEffect(() => {
-    axios.get('http://localhost:4003/profile', {
+    axios.get('https://blog-mern-backend-ayjw.onrender.com/profile', {
       withCredentials: true // ensure credentials are included
     })
     .then(response => {
@@ -23,7 +23,7 @@ export default function Header(){
   }, []);
   
    function logout(){
-       axios.post('http://localhost:4003/logout', {withCredentials: true}); //this axios request request for post certaibn creditiontionals from the backend which includes token which is specified in the backend index.js file
+       axios.post('https://blog-mern-backend-ayjw.onrender.com/logout', {withCredentials: true}); //this axios request request for post certaibn creditiontionals from the backend which includes token which is specified in the backend index.js file
          setUserInfo(null); //we have declared a if stattement that if userName null page will return to login and regsiter page so in logout function after we click on a tag when username goes to null by setUsername(null) page will go to login and register 
       }
       const username = userInfo?.username;

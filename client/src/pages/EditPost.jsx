@@ -19,7 +19,7 @@ export default function EditPost(){
   const {id} = useParams();
   
   useEffect(()=>{
-     axios.get(`http://localhost:4003/post/${id}`)
+     axios.get(`https://blog-mern-backend-ayjw.onrender.com/post/${id}`)
      .then(response=>{
       const postInfo = response.data;
       setTitle(postInfo.title);
@@ -41,7 +41,7 @@ export default function EditPost(){
          if (files?.[0]) {
          data.set('files', files[0]); //it is because even though when multiple files are selected we need to send only one file ie first file ie we provide index.
       }
-          const response =  await axios.put('http://localhost:4003/post', data, {withCredentials: true})
+          const response =  await axios.put('https://blog-mern-backend-ayjw.onrender.com/post', data, {withCredentials: true})
  
          if(response.status === 200){
             setRedirect(true);
